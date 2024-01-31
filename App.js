@@ -1,17 +1,10 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 import Navigation from './app/navigation/index';
-
+import {AuthProvider} from "./app/contexts/jwt-context";
 
 export default function App() {
-  return <Navigation />;
+  return (
+      <AuthProvider>
+        <Navigation />
+      </AuthProvider>
+  );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

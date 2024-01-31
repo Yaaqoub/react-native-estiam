@@ -1,5 +1,7 @@
 import {createContext, useCallback, useEffect, useReducer} from 'react';
 import PropTypes from 'prop-types';
+import {authApi} from "../api/auth-api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 var ActionType;
 
@@ -59,7 +61,23 @@ export const AuthProvider = (props) => {
         console.log('helloooooooo!');
     }, []);
 
-    const signIn = useCallback(() => {}, []);
+    const signIn = useCallback(async (email, password) => {
+        const authResponse = await authApi.signIn({email, password});
+
+        await AsyncStorage.setItem('ACCESS_TOKEN', authResponse.access_token);
+        await AsyncStorage.setItem('REFRESH_TOKEN', authResponse.refresh_token);
+
+        console.log(authResponse);
+        // Execute get user request
+        const user = null;
+
+        dispatch({
+            type: ActionType.SIGN_IN,
+            payload: {
+                user
+            }
+        });
+    }, [dispatch]);
 
     const signOut = useCallback(() => {}, []);
 

@@ -1,14 +1,19 @@
 import React, {useState} from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import {useAuth} from '../../hooks/use-auth';
 
 const LoginScreen = () => {
+    const { signIn } = useAuth();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLogin = () => {
-        console.log('email: ' + email);
-        console.log('password: ' + password);
+    const handleLogin = async () => {
+        try {
+            await signIn(email, password);
+        } catch (e) {
+            console.log(e);
+        }
     };
 
 
@@ -17,16 +22,18 @@ const LoginScreen = () => {
             <TextInput
                 style={styles.input}
                 onChangeText={(email) => setEmail(email)}
+                placeholder="Email"
             />
 
             <TextInput
                 style={styles.input}
                 onChangeText={(password) => setPassword(password)}
                 secureTextEntry={true}
+                placeholder="Password"
             />
 
             <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                <Text>Press Here</Text>
+                <Text style={styles.loginText}>Login</Text>
             </TouchableOpacity>
 
         </View>
@@ -43,8 +50,12 @@ const styles = StyleSheet.create({
     button: {
         alignItems: 'center',
         backgroundColor: '#DDDDDD',
-        padding: 10,
+        padding: 15,
     },
+    loginText: {
+        fontSize: 20,
+        fontWeight: 'bold'
+    }
 });
 
 
