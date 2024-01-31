@@ -1,13 +1,16 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {useAuth} from '../../hooks/use-auth';
 
 const HomeScreen = ({ navigation }) => {
+    const { user } = useAuth();
+
     return (
         <View>
             <Text style={styles.title}>Home</Text>
             <Text style={styles.description}>
                 Connected User:{' '}
-                <Text>N/A</Text>
+                <Text>{user ? user.email : 'N/A'}</Text>
             </Text>
             <TouchableOpacity
                 onPress={() => navigation.navigate('Login')}

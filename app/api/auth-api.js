@@ -20,8 +20,17 @@ class AuthApi {
 
     me(accessToken) {
         return new Promise((resolve, reject) => {
-            // https://api.escuelajs.co/api/v1/auth/profile
-            // Doc: https://fakeapi.platzi.com/en/rest/auth-jwt
+            axios({
+                url: 'https://api.escuelajs.co/api/v1/auth/profile',
+                method: 'GET',
+                headers: {
+                    Authorization: 'Bearer ' + accessToken
+                }
+            })
+                .then((res) => {
+                    resolve(res.data);
+                })
+                .catch((err => reject(err)));
         });
     }
 }

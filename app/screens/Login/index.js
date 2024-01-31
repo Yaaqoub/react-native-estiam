@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import {useAuth} from '../../hooks/use-auth';
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
     const { signIn } = useAuth();
 
     const [email, setEmail] = useState('');
@@ -11,6 +11,7 @@ const LoginScreen = () => {
     const handleLogin = async () => {
         try {
             await signIn(email, password);
+            navigation.navigate('Home');
         } catch (e) {
             console.log(e);
         }

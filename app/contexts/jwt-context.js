@@ -67,9 +67,7 @@ export const AuthProvider = (props) => {
         await AsyncStorage.setItem('ACCESS_TOKEN', authResponse.access_token);
         await AsyncStorage.setItem('REFRESH_TOKEN', authResponse.refresh_token);
 
-        console.log(authResponse);
-        // Execute get user request
-        const user = null;
+        const user = await  authApi.me(authResponse.access_token);
 
         dispatch({
             type: ActionType.SIGN_IN,
